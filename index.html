@@ -2,16 +2,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitation Mariage Premium</title><style>
+<title>Invitation Mariage PRO ULTRA</title><style>
 body{
   margin:0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ffe4e1, #fff0f5);
   user-select:none;
+  background:linear-gradient(120deg,#fff,#ffe4e1,#e6f0ff);
 }
 
 .container{
-  max-width:900px;
+  max-width:950px;
   margin:auto;
   padding:20px;
 }
@@ -21,11 +21,29 @@ body{
   border-radius:20px;
   padding:25px;
   margin-bottom:25px;
-  box-shadow:0 0 20px rgba(0,0,0,0.15);
-  border:5px solid gold;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
   position:relative;
   overflow:hidden;
+  border:5px solid gold;
 }
+
+.page1{border-color:gold; background:linear-gradient(#fff,#fffaf0);} 
+.page2{border-color:#ff69b4; background:linear-gradient(#fff,#fff0f5);} 
+.page3{border-color:#1e3a8a; background:linear-gradient(#fff,#eef5ff);} 
+
+.ribbon{
+  position:absolute;
+  width:170%;
+  height:60px;
+  top:-25px;
+  left:-35%;
+  transform:rotate(-8deg);
+  border-radius:50px;
+  opacity:0.9;
+}
+.page1 .ribbon{background:linear-gradient(90deg,#ffd700,#fff8dc);} 
+.page2 .ribbon{background:linear-gradient(90deg,#ff69b4,#ffc0cb);} 
+.page3 .ribbon{background:linear-gradient(90deg,#1e3a8a,#60a5fa);} 
 
 .title{
   text-align:center;
@@ -35,65 +53,51 @@ body{
   color:#b30059;
 }
 
-.sub{text-align:center;color:#444;}
-
 .footer{
   text-align:center;
   font-size:11px;
-  margin-top:25px;
-  color:#333;
+  margin-top:20px;
+  color:#444;
 }
 
-.ribbon{
-  position:absolute;
-  width:160%;
-  height:60px;
-  top:-20px;
-  left:-30%;
-  transform:rotate(-8deg);
-  border-radius:50px;
-}
-.page1 .ribbon{background:linear-gradient(90deg,#4fc3f7,#81d4fa);} 
-.page2 .ribbon{background:linear-gradient(90deg,#ffd54f,#fff176);} 
-.page3 .ribbon{background:linear-gradient(90deg,#f48fb1,#f8bbd0);} 
-
-/* HEART FRAME */
-.heart-frame{
+.heart{
   width:220px;
   height:200px;
   margin:15px auto;
   cursor:pointer;
-  clip-path: path('M110 30 C110 0, 0 0, 0 70 C0 140, 110 180, 110 200 C110 180, 220 140, 220 70 C220 0, 110 0, 110 30 Z');
+  clip-path: path('M110 30 C110 0,0 0,0 70 C0 140,110 180,110 200 C110 180,220 140,220 70 C220 0,110 0,110 30 Z');
   border:3px solid gold;
   overflow:hidden;
   background:#fff;
 }
 
-.heart-frame img{
+.heart img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
 .wrap{
-  display:block;
   text-align:justify;
   line-height:1.7;
 }
 
 .wrap img{
-  width:120px;
-  height:120px;
+  width:110px;
+  height:110px;
   object-fit:cover;
-  border-radius:12px;
-  margin:10px;
+  border-radius:15px;
   float:left;
-  cursor:pointer;
+  margin:10px 15px 10px 0;
+  box-shadow:0 5px 10px rgba(0,0,0,0.2);
 }
 
 .wrap img.right{
   float:right;
+  margin:10px 0 10px 15px;
 }
+
+input[type=file]{display:none;}
 
 button{
   padding:10px;
@@ -103,63 +107,61 @@ button{
   cursor:pointer;
 }
 
-input[type=file]{display:none;}
+/* PDF optimisation */
+@media print{
+  body{background:white !important;}
+  .page{page-break-after:always; box-shadow:none;}
+  .title{font-size:28px;}
+  .wrap{font-size:14px;}
+}
 
 </style></head>
 <body><div class="container"><div class="page page1">
-  <div class="ribbon"></div>  <div class="title">💍 Mariage de Rêve 💍</div>  <div class="heart-frame" onclick="upload(1)">
+  <div class="ribbon"></div>
+  <div class="title" contenteditable="true">💎 Mariage Prestige 💎</div>  <div class="heart" onclick="upload(1)">
     <img id="img1">
-  </div>  <p class="sub" contenteditable="true">Bienvenue à notre cérémonie d'amour ❤️</p>  <div class="wrap">
+  </div>  <div class="wrap">
     <img id="p1img" onclick="upload(1)">
-    <p contenteditable="true">Présentation des mariés 💖</p>
+    <p contenteditable="true">Célébration élégante et raffinée ✨</p>
   </div>
 </div><div class="page page2">
-  <div class="ribbon"></div>  <div class="title">📅 Programme</div>  <div class="wrap">
+  <div class="ribbon"></div>
+  <div class="title" contenteditable="true">🌹 Programme Floral 🌹</div>  <div class="wrap">
     <img id="p2img" class="right" onclick="upload(2)">
     <p contenteditable="true">
-      10h - Cérémonie 🕊️<br>
-      12h - Photos 📸<br>
-      14h - Réception 🎉
+      10h Cérémonie 🕊️<br>
+      12h Photos 📸<br>
+      14h Réception 🎉
     </p>
   </div>
 </div><div class="page page3">
-  <div class="ribbon"></div>  <div class="title">💌 Remerciements</div>  <div class="wrap">
+  <div class="ribbon"></div>
+  <div class="title" contenteditable="true">👑 Remerciements 👑</div>  <div class="wrap">
     <img id="p3img" onclick="upload(3)">
-    <p contenteditable="true">Merci pour votre présence ❤️</p>
+    <p contenteditable="true">Merci pour votre présence 💙</p>
   </div>  <div class="footer">Créé par ets Lesfacilitateurs groupe What's+237670035609</div>
 </div><button style="background:red;color:white;" onclick="askCode()">📄 Télécharger PDF</button>
 
-</div><input type="file" id="file" accept="image/*"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script><script>
-const file = document.getElementById('file');
-let target = null;
+</div><input type="file" id="file"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script><script>
+let target=null;
+const file=document.getElementById('file');
 
 function upload(n){
-  target = n;
+  target=n;
   file.click();
 }
 
-file.onchange = function(e){
-  const f = e.target.files[0];
-  if(!f) return;
-  const url = URL.createObjectURL(f);
+file.onchange=function(e){
+  const url=URL.createObjectURL(e.target.files[0]);
 
-  if(target === 1){
-    document.getElementById('img1').src = url;
-    document.getElementById('p1img').src = url;
-  }
-
-  if(target === 2){
-    document.getElementById('p2img').src = url;
-  }
-
-  if(target === 3){
-    document.getElementById('p3img').src = url;
-  }
+  if(target===1){document.getElementById('img1').src=url;document.getElementById('p1img').src=url;}
+  if(target===2){document.getElementById('p2img').src=url;}
+  if(target===3){document.getElementById('p3img').src=url;}
 }
 
 function askCode(){
-  const c = prompt("Code :");
-  if(c === '233') downloadPDF();
+  const c=prompt("Code :");
+  if(c==='233') downloadPDF();
   else if(c) alert("Code incorrect ❌");
 }
 
@@ -167,9 +169,9 @@ function downloadPDF(){
   html2pdf().set({
     margin:10,
     filename:'invitation.pdf',
-    html2canvas:{scale:2,useCORS:true},
-    jsPDF:{unit:'mm',format:'a4'}
+    html2canvas:{scale:1,useCORS:true},
+    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
   }).from(document.querySelector('.container')).save();
 }
 </script></body>
-  </html>
+</html>
