@@ -30,7 +30,18 @@ body{
 .page1{border-color:gold; background:linear-gradient(#fff,#fffaf0);} 
 .page2{border-color:#ff69b4; background:linear-gradient(#fff,#fff0f5);} 
 .page3{border-color:#1e3a8a; background:linear-gradient(#fff,#eef5ff);} 
+.container{
+  padding:0 !important;
+}
 
+.page{
+  margin:0 !important;
+  margin-bottom:10px !important;
+}
+
+body{
+  margin:0 !important;
+}
 .ribbon{
   position:absolute;
   width:170%;
@@ -167,26 +178,31 @@ function askCode(){
 
 
   
-function downloadPDF() {
+
+  function downloadPDF() {
 
   const pages = document.querySelectorAll('.page');
   const { jsPDF } = window.jspdf;
 
-  // 📄 A6 = 105 x 148 mm
   const pdf = new jsPDF('p', 'mm', 'a6');
 
   const pageWidth = 105;
   const pageHeight = 148;
 
-  let current = 0;
+  let i = 0;
 
-  function render(index) {
+  function renderPage() {
 
-    html2canvas(pages[index], {
+    const el = pages[i];
+
+    html2canvas(el, {
       scale: 2,
       useCORS: true,
       backgroundColor: "#ffffff",
-      windowWidth: pages[index].scrollWidth
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: el.scrollWidth,
+      windowHeight: el.scrollHeight
     }).then(canvas => {
 
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -196,20 +212,20 @@ function downloadPDF() {
 
       pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
 
-      current++;
+      i++;
 
-      if (current < pages.length) {
+      if (i < pages.length) {
         pdf.addPage();
-        render(current);
+        renderPage();
       } else {
-        pdf.save("invitation-mariage-A6.pdf");
+        pdf.save("invitation-mariage.pdf");
       }
 
     });
 
   }
 
-  render(0);
+  renderPage();
 }
 </script></body>
 </html>
