@@ -165,7 +165,8 @@ function askCode(){
 }
 
 
-function downloadPDF() {
+
+  function downloadPDF() {
 
   const pages = document.querySelectorAll('.page');
   const { jsPDF } = window.jspdf;
@@ -177,28 +178,41 @@ function downloadPDF() {
 
   let currentPage = 0;
 
-  function renderPage(index) {
+  function addPage(index) {
 
     html2canvas(pages[index], {
       scale: 2,
       useCORS: true,
-      backgroundColor: "#ffffff"
+      backgroundColor: "#ffffff",
+      windowWidth: pages[index].scrollWidth
     }).then(canvas => {
 
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
-      const imgHeight = (canvas.height * pageWidth) / canvas.width;
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      if (currentPage > 0) {
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // première page
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+
+      heightLeft -= pageHeight;
+
+      // si dépassement, on ajoute pages propres
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
         pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
       }
-
-      pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, imgHeight);
 
       currentPage++;
 
       if (currentPage < pages.length) {
-        renderPage(currentPage);
+        pdf.addPage();
+        addPage(currentPage);
       } else {
         pdf.save("invitation-mariage.pdf");
       }
@@ -207,7 +221,7 @@ function downloadPDF() {
 
   }
 
-  renderPage(0);
+  addPage(0);
 }
 </script></body>
 </html>
