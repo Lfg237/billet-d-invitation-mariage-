@@ -166,19 +166,21 @@ function askCode(){
 
 
 
-  function downloadPDF() {
+  
+function downloadPDF() {
 
   const pages = document.querySelectorAll('.page');
   const { jsPDF } = window.jspdf;
 
-  const pdf = new jsPDF('p', 'mm', 'a4');
+  // 📄 A6 = 105 x 148 mm
+  const pdf = new jsPDF('p', 'mm', 'a6');
 
-  const pageWidth = 210;
-  const pageHeight = 297;
+  const pageWidth = 105;
+  const pageHeight = 148;
 
-  let currentPage = 0;
+  let current = 0;
 
-  function addPage(index) {
+  function render(index) {
 
     html2canvas(pages[index], {
       scale: 2,
@@ -192,36 +194,22 @@ function askCode(){
       const imgWidth = pageWidth;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      let heightLeft = imgHeight;
-      let position = 0;
+      pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
 
-      // première page
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      current++;
 
-      heightLeft -= pageHeight;
-
-      // si dépassement, on ajoute pages propres
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
+      if (current < pages.length) {
         pdf.addPage();
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-
-      currentPage++;
-
-      if (currentPage < pages.length) {
-        pdf.addPage();
-        addPage(currentPage);
+        render(current);
       } else {
-        pdf.save("invitation-mariage.pdf");
+        pdf.save("invitation-mariage-A6.pdf");
       }
 
     });
 
   }
 
-  addPage(0);
+  render(0);
 }
 </script></body>
 </html>
