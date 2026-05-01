@@ -141,7 +141,8 @@ button{
     <p contenteditable="true">Merci pour votre présence 💙</p>
   </div>  <div class="footer">Créé par ets Lesfacilitateurs groupe What's+237670035609</div>
 </div><button style="background:red;color:white;" onclick="askCode()">📄 Télécharger PDF</button>
-
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </div><input type="file" id="file"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script><script>
 let target=null;
 const file=document.getElementById('file');
@@ -165,37 +166,35 @@ function askCode(){
   else if(c) alert("Code incorrect ❌");
 }
 
-function downloadPDF(){
-
+function downloadPDF() {
   const element = document.querySelector('.container');
 
   const opt = {
-    margin: [10, 10, 10, 10],
-    filename: 'invitation-mariage.pdf',
-    image: { type: 'jpeg', quality: 1 },
-
-    html2canvas: {
-      scale: 2,          // 🔥 améliore netteté + visibilité
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      scrollY: 0
-    },
-
-    jsPDF: {
-      unit: 'mm',
-      format: 'a4',
-      orientation: 'portrait'
-    },
-
-    pagebreak: {
-      mode: ['css', 'legacy']
-    }
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff'
   };
 
-  // 🔥 petit délai pour stabiliser le rendu
-  setTimeout(() => {
-    html2pdf().set(opt).from(element).save();
-  }, 300);
+  html2canvas(element, opt).then(canvas => {
+
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+
+    const pageWidth = 210;
+    const pageHeight = 297;
+
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * pageWidth) / canvas.width;
+
+    let position = 0;
+
+    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+
+    pdf.save('invitation-mariage.pdf');
+  });
+}
 }
 </script></body>
 </html>
