@@ -164,28 +164,50 @@ function askCode(){
   else if(c) alert("Code incorrect ❌");
 }
 
-function downloadPDF(){
 
-  const element = document.querySelector('.container');
+function downloadPDF() {
 
-  html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#ffffff'
-  }).then(canvas => {
+  const pages = document.querySelectorAll('.page');
+  const { jsPDF } = window.jspdf;
 
-    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+  const pdf = new jsPDF('p', 'mm', 'a4');
 
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'mm', 'a4');
+  const pageWidth = 210;
+  const pageHeight = 297;
 
-    const pageWidth = 210;
-    const imgHeight = (canvas.height * pageWidth) / canvas.width;
+  let currentPage = 0;
 
-    pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, imgHeight);
+  function renderPage(index) {
 
-    pdf.save('invitation-mariage.pdf');
-  });
+    html2canvas(pages[index], {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    }).then(canvas => {
+
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+      const imgHeight = (canvas.height * pageWidth) / canvas.width;
+
+      if (currentPage > 0) {
+        pdf.addPage();
+      }
+
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, imgHeight);
+
+      currentPage++;
+
+      if (currentPage < pages.length) {
+        renderPage(currentPage);
+      } else {
+        pdf.save("invitation-mariage.pdf");
+      }
+
+    });
+
+  }
+
+  renderPage(0);
 }
 </script></body>
 </html>
