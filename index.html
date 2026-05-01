@@ -107,14 +107,6 @@ button{
   cursor:pointer;
 }
 
-/* PDF optimisation */
-@media print{
-  body{background:white !important;}
-  .page{page-break-after:always; box-shadow:none;}
-  .title{font-size:28px;}
-  .wrap{font-size:14px;}
-}
-
 </style></head>
 <body><div class="container"><div class="page page1">
   <div class="ribbon"></div>
@@ -141,41 +133,46 @@ button{
     <p contenteditable="true">Merci pour votre présence 💙</p>
   </div>  <div class="footer">Créé par ets Lesfacilitateurs groupe What's+237670035609</div>
 </div><button style="background:red;color:white;" onclick="askCode()">📄 Télécharger PDF</button>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</div><input type="file" id="file"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script><script>
-let target=null;
-const file=document.getElementById('file');
+
+</div><input type="file" id="file" accept="image/*"><!-- LIBRAIRIES PDF --><script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script>
+let target = null;
+const file = document.getElementById('file');
 
 function upload(n){
-  target=n;
+  target = n;
   file.click();
 }
 
-file.onchange=function(e){
-  const url=URL.createObjectURL(e.target.files[0]);
+file.onchange = function(e){
+  const url = URL.createObjectURL(e.target.files[0]);
 
-  if(target===1){document.getElementById('img1').src=url;document.getElementById('p1img').src=url;}
-  if(target===2){document.getElementById('p2img').src=url;}
-  if(target===3){document.getElementById('p3img').src=url;}
+  if(target === 1){
+    document.getElementById('img1').src = url;
+    document.getElementById('p1img').src = url;
+  }
+  if(target === 2){
+    document.getElementById('p2img').src = url;
+  }
+  if(target === 3){
+    document.getElementById('p3img').src = url;
+  }
 }
 
 function askCode(){
-  const c=prompt("Code :");
-  if(c==='233') downloadPDF();
+  const c = prompt("Code :");
+  if(c === '233') downloadPDF();
   else if(c) alert("Code incorrect ❌");
 }
 
-function downloadPDF() {
+function downloadPDF(){
+
   const element = document.querySelector('.container');
 
-  const opt = {
+  html2canvas(element, {
     scale: 2,
     useCORS: true,
     backgroundColor: '#ffffff'
-  };
-
-  html2canvas(element, opt).then(canvas => {
+  }).then(canvas => {
 
     const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
@@ -183,18 +180,12 @@ function downloadPDF() {
     const pdf = new jsPDF('p', 'mm', 'a4');
 
     const pageWidth = 210;
-    const pageHeight = 297;
-
-    const imgWidth = pageWidth;
     const imgHeight = (canvas.height * pageWidth) / canvas.width;
 
-    let position = 0;
-
-    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+    pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, imgHeight);
 
     pdf.save('invitation-mariage.pdf');
   });
-}
 }
 </script></body>
 </html>
