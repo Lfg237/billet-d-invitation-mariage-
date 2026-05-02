@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!DOCTYPE html><html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitation Mariage PRO ULTRA</title>
-
-<style>
+<title>Invitation Mariage PRO ULTRA</title><style>
 body{
   margin:0;
   font-family: Arial, sans-serif;
@@ -23,18 +20,28 @@ body{
   background:white;
   border-radius:20px;
   padding:25px;
-  margin-bottom:15px;
+  margin-bottom:25px;
   box-shadow:0 10px 25px rgba(0,0,0,0.15);
   position:relative;
   overflow:hidden;
   border:5px solid gold;
 }
 
-/* RIBBONS */
 .page1{border-color:gold; background:linear-gradient(#fff,#fffaf0);} 
 .page2{border-color:#ff69b4; background:linear-gradient(#fff,#fff0f5);} 
 .page3{border-color:#1e3a8a; background:linear-gradient(#fff,#eef5ff);} 
+.container{
+  padding:0 !important;
+}
 
+.page{
+  margin:0 !important;
+  margin-bottom:10px !important;
+}
+
+body{
+  margin:0 !important;
+}
 .ribbon{
   position:absolute;
   width:170%;
@@ -45,7 +52,6 @@ body{
   border-radius:50px;
   opacity:0.9;
 }
-
 .page1 .ribbon{background:linear-gradient(90deg,#ffd700,#fff8dc);} 
 .page2 .ribbon{background:linear-gradient(90deg,#ff69b4,#ffc0cb);} 
 .page3 .ribbon{background:linear-gradient(90deg,#1e3a8a,#60a5fa);} 
@@ -102,125 +108,130 @@ body{
   margin:10px 0 10px 15px;
 }
 
+input[type=file]{display:none;}
+
 button{
   padding:10px;
   margin:5px;
   border:none;
   border-radius:10px;
   cursor:pointer;
-  font-weight:bold;
 }
 
-</style>
-</head>
-
-<body>
-
-<div class="container" id="doc">
-
-<!-- PAGE 1 -->
-<div class="page page1">
+</style></head>
+<body><div class="container"><div class="page page1">
   <div class="ribbon"></div>
-  <div class="title" contenteditable="true">💎 Mariage Prestige 💎</div>
-
-  <div class="heart">
+  <div class="title" contenteditable="true">💎 Mariage Prestige 💎</div>  <div class="heart" onclick="upload(1)">
     <img id="img1">
-  </div>
-
-  <div class="wrap">
-    <img id="p1img">
+  </div>  <div class="wrap">
+    <img id="p1img" onclick="upload(1)">
     <p contenteditable="true">Célébration élégante et raffinée ✨</p>
   </div>
-</div>
-
-<!-- PAGE 2 -->
-<div class="page page2">
+</div><div class="page page2">
   <div class="ribbon"></div>
-  <div class="title" contenteditable="true">🌹 Programme Floral 🌹</div>
-
-  <div class="wrap">
-    <img id="p2img" class="right">
+  <div class="title" contenteditable="true">🌹 Programme Floral 🌹</div>  <div class="wrap">
+    <img id="p2img" class="right" onclick="upload(2)">
     <p contenteditable="true">
       10h Cérémonie 🕊️<br>
       12h Photos 📸<br>
       14h Réception 🎉
     </p>
   </div>
-</div>
-
-<!-- PAGE 3 -->
-<div class="page page3">
+</div><div class="page page3">
   <div class="ribbon"></div>
-  <div class="title" contenteditable="true">👑 Remerciements 👑</div>
-
-  <div class="wrap">
-    <img id="p3img">
+  <div class="title" contenteditable="true">👑 Remerciements 👑</div>  <div class="wrap">
+    <img id="p3img" onclick="upload(3)">
     <p contenteditable="true">Merci pour votre présence 💙</p>
-  </div>
+  </div>  <div class="footer">Créé par ets Lesfacilitateurs groupe What's+237670035609</div>
+</div><button style="background:red;color:white;" onclick="askCode()">📄 Télécharger PDF</button>
 
-  <div class="footer">
-    Créé par ets Lesfacilitateurs groupe What's +237670035609
-  </div>
-</div>
+</div><input type="file" id="file" accept="image/*"><!-- LIBRAIRIES PDF --><script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script>
+let target = null;
+const file = document.getElementById('file');
 
-<button style="background:red;color:white;" onclick="askCode()">📄 Télécharger PDF</button>
-
-</div>
-
-<input type="file" id="file" accept="image/*">
-
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<script>
-
-let target=null;
-const file=document.getElementById('file');
-
-/* IMAGE UPLOAD */
-file.onchange=e=>{
-const url=URL.createObjectURL(e.target.files[0]);
-if(target===1){img1.src=url;p1img.src=url;}
-if(target===2){p2img.src=url;}
-if(target===3){p3img.src=url;}
+function upload(n){
+  target = n;
+  file.click();
 }
 
-function upload(n){target=n;file.click();}
+file.onchange = function(e){
+  const url = URL.createObjectURL(e.target.files[0]);
 
-/* CODE */
+  if(target === 1){
+    document.getElementById('img1').src = url;
+    document.getElementById('p1img').src = url;
+  }
+  if(target === 2){
+    document.getElementById('p2img').src = url;
+  }
+  if(target === 3){
+    document.getElementById('p3img').src = url;
+  }
+}
+
 function askCode(){
-let c=prompt("Code 233 ?");
-if(c==="233") downloadPDF();
-else alert("Code incorrect");
+  const c = prompt("Code :");
+  if(c === '233') downloadPDF();
+  else if(c) alert("Code incorrect ❌");
 }
 
-/* FIX PDF HD + NON VIDE */
-async function downloadPDF(){
 
-const pages=document.querySelectorAll('.page');
-const {jsPDF}=window.jspdf;
 
-const pdf=new jsPDF('p','mm',[105,148]); // A6
+  
 
-for(let i=0;i<pages.length;i++){
+  
+  function downloadPDF() {
 
-const canvas=await html2canvas(pages[i],{
-scale:3,
-useCORS:true,
-backgroundColor:"#ffffff"
-});
+  const pages = document.querySelectorAll('.page');
+  const { jsPDF } = window.jspdf;
 
-const img=canvas.toDataURL("image/jpeg",1.0);
+  const pdf = new jsPDF('p', 'mm', 'a6');
 
-pdf.addImage(img,'JPEG',0,0,105,148);
+  const pageWidth = 105;
+  const pageHeight = 148;
 
-if(i<pages.length-1) pdf.addPage();
+  let i = 0;
+
+  function renderPage() {
+
+    const el = pages[i];
+
+    html2canvas(el, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      scrollX: 0,
+      scrollY: 0
+    }).then(canvas => {
+
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+      const imgWidth = pageWidth;
+
+      // 🔥 CORRECTION IMPORTANTE : hauteur MAX respectée
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      // si trop grand → on ajuste pour éviter coupe
+      if (imgHeight > pageHeight) {
+        imgHeight = pageHeight;
+      }
+
+      pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+
+      i++;
+
+      if (i < pages.length) {
+        pdf.addPage();
+        renderPage();
+      } else {
+        pdf.save("invitation-mariage.pdf");
+      }
+
+    });
+
+  }
+
+  renderPage();
 }
-
-pdf.save("invitation-mariage.pdf");
-}
-
-</script>
-
-</body>
+</script></body>
 </html>
